@@ -11,26 +11,32 @@ def display_board():
     print("_________")
     print(f"{board[2][0]} | {board[2][1]} | {board[2][2]}")
 
-def user_selection():
+def player_select(symbol):
     while True:
-        row = int(input("Choose 0 for top row, 1 for middle , 2 for bottom\n"))
-        if 0 <= row < 3:
+        row = int(input(f"{symbol} user Choose 0 for top row, 1 for middle , 2 for bottom\n"))
+        if not (0 <= row < 3):
+            print("Please enter a correct row")
+            continue
+        column = int(input(f"{symbol} user Choose 0 for left column , 1 for middle, 2 for right\n"))
+        if not ( 0 <= column < 3):
+            print("Please enter a correct column")
+            continue
+
+        if board[row][column] == " ":
+            board[row][column] = symbol
+            display_board()
             break
         else:
-          print("Please Try again")
-    while True:
-        column = int(input("Choose 0 for left column , 1 for middle, 2 for right\n"))
-        if 0 <= column < 3:
-             break
-        else:
-          print("Please Try again")
-    return row,column
+            print("Invalid move")
+
+
+
 
 
 while True:
-    row, column = user_selection()
-    if board[row][column] == " ":
-        board[row][column] = "X"
-        display_board()
-    else:
-        print("Invalid move")
+    player_select("X")
+    player_select("O")
+
+
+
+
