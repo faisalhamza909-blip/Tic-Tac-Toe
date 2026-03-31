@@ -29,13 +29,54 @@ def player_select(symbol):
         else:
             print("Invalid move")
 
+def check_winner(symbol):
+    # Rows
+    if board[0] == [symbol, symbol, symbol]:
+        print(f"{symbol} wins!")
+        return True
+    if board[1] == [symbol, symbol, symbol]:
+        print(f"{symbol} wins!")
+        return True
+    if board[2] == [symbol, symbol, symbol]:
+        print(f"{symbol} wins!")
+        return True
+
+    # Columns
+    if board[0][0] == symbol and board[1][0] == symbol and board[2][0] == symbol:
+        print(f"{symbol} wins!")
+        return True
+    if board[0][1] == symbol and board[1][1] == symbol and board[2][1] == symbol:
+        print(f"{symbol} wins!")
+        return True
+    if board[0][2] == symbol and board[1][2] == symbol and board[2][2] == symbol:
+        print(f"{symbol} wins!")
+        return True
+
+    # Diagonals
+    if board[0][0] == symbol and board[1][1] == symbol and board[2][2] == symbol:
+        print(f"{symbol} wins!")
+        return True
+    if board[0][2] == symbol and board[1][1] == symbol and board[2][0] == symbol:
+        print(f"{symbol} wins!")
+        return True
+
+    return False
 
 
 
+
+
+display_board()
 
 while True:
     player_select("X")
+    if check_winner("X"):
+        break
     player_select("O")
+    if check_winner("O"):
+        break
+
+
 
 
 
