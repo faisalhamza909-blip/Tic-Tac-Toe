@@ -5,25 +5,37 @@ board = [
     [' ', ' ', ' '],
     [' ', ' ', ' ']
 ]
-game = 1
-def display_board():
 
-    print(f"Match #{game}")
+game = 1
+x_score = 0
+o_score = 0
+
+
+def display_board():
+    print(f"\nMatch #{game}")
     print(f"{board[0][0]} | {board[0][1]} | {board[0][2]}")
     print("_________")
     print(f"{board[1][0]} | {board[1][1]} | {board[1][2]}")
     print("_________")
     print(f"{board[2][0]} | {board[2][1]} | {board[2][2]}")
+    print()
+
 
 def player_select(symbol):
     while True:
-        row = int(input(f"{symbol} user Choose 0 for top row, 1 for middle , 2 for bottom\n"))
-        if not (0 <= row < 3):
-            print("Please enter a correct row")
-            continue
-        column = int(input(f"{symbol} user Choose 0 for left column , 1 for middle, 2 for right\n"))
-        if not ( 0 <= column < 3):
-            print("Please enter a correct column")
+        try:
+            row = int(input(f"{symbol} user Choose 0 for top row, 1 for middle, 2 for bottom:\n"))
+            if not (0 <= row < 3):
+                print("Please enter a correct row")
+                continue
+
+            column = int(input(f"{symbol} user Choose 0 for left column, 1 for middle, 2 for right:\n"))
+            if not (0 <= column < 3):
+                print("Please enter a correct column")
+                continue
+
+        except ValueError:
+            print("Please enter numbers only (0, 1, or 2).")
             continue
 
         if board[row][column] == " ":
@@ -31,7 +43,8 @@ def player_select(symbol):
             display_board()
             break
         else:
-            print("Invalid move")
+            print("Invalid move, spot already taken.")
+
 
 def check_winner(symbol):
     # Rows
@@ -66,6 +79,7 @@ def check_winner(symbol):
 
     return False
 
+
 def check_draw():
     for row in board:
         if " " in row:
@@ -73,12 +87,8 @@ def check_draw():
     return True
 
 
-
-x_score =0
-o_score = 0
-
-
 replay = True
+
 while replay:
     board = [
         [' ', ' ', ' '],
@@ -87,27 +97,35 @@ while replay:
     ]
 
     display_board()
+
     while True:
         player_select("X")
         if check_winner("X"):
             x_score += 1
-            print(f"Total wins for x = {x_score}")
+            print(f"Total wins for X = {x_score}")
             break
         if check_draw():
             print("It's a draw!")
             break
+
         player_select("O")
         if check_winner("O"):
             o_score += 1
-            print(f"Total wins for y = {o_score}")
+            print(f"Total wins for O = {o_score}")
             break
         if check_draw():
             print("It's a draw!")
             break
-    again = input("Press Y to play again and N to close" ).upper()
-    if again == "Y":
-        game += 1
-    elif again == "N":
-        print(f"Total wins for X is {x_score} and for O is {o_score}")
-        replay = False
-    else: print("Invalid input, please press Y or N." )
+
+    while True:
+        again = input("Press Y to play again or N to exit: ").upper()
+
+        if again == "Y":
+            game += 1
+            break
+        elif again == "N":
+            print(f"Final score -> X: {x_score}, O: {o_score}")
+            replay = False
+            break
+        else:
+            print("Invalid input, please press Y or N.")
