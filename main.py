@@ -14,18 +14,23 @@ def display_board():
 def user_selection():
     while True:
         row = int(input("Choose 0 for top row, 1 for middle , 2 for bottom\n"))
-        if row < 3 :
+        if 0 <= row < 3:
             break
         else:
           print("Please Try again")
     while True:
         column = int(input("Choose 0 for left column , 1 for middle, 2 for right\n"))
-        if column < 3:
+        if 0 <= column < 3:
              break
         else:
           print("Please Try again")
+    return row,column
 
-    board[row][column] = "X"
-    display_board()
 
-user_selection()
+while True:
+    row, column = user_selection()
+    if board[row][column] == " ":
+        board[row][column] = "X"
+        display_board()
+    else:
+        print("Invalid move")
